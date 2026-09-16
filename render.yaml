@@ -1,7 +1,7 @@
 services:
-  # Spring Boot Backend
+  # Unified Web Service (Spring Boot Backend + Embedded React Frontend)
   - type: web
-    name: trackship-backend
+    name: trackship-pro
     env: docker
     plan: free
     region: oregon
@@ -25,15 +25,3 @@ services:
       - key: BREVO_SMTP_PASSWORD
         sync: false
     healthCheckPath: /
-
-  # React Frontend
-  - type: web
-    name: trackship-frontend
-    env: docker
-    plan: free
-    region: oregon
-    dockerfilePath: ./frontend/Dockerfile
-    dockerContext: ./frontend
-    envVars:
-      - key: VITE_API_URL
-        value: https://trackship-backend.onrender.com

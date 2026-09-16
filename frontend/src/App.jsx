@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Package, PlusSquare, MapPin, Calculator, Users, FileCheck, BarChart3, ShieldCheck, LayoutDashboard } from 'lucide-react';
+import { Package, PlusSquare, MapPin, Calculator, Users, FileCheck, BarChart3, ShieldCheck, LayoutDashboard, Compass } from 'lucide-react';
 import { Navbar } from './components/Navbar.jsx';
 import { LandingPage } from './components/LandingPage.jsx';
 import { ShipmentsTab } from './components/ShipmentsTab.jsx';
 import { CreateShipmentTab } from './components/CreateShipmentTab.jsx';
 import { LiveTrackingTab } from './components/LiveTrackingTab.jsx';
 import { ETATab } from './components/ETATab.jsx';
+import { RouteAnalysisTab } from './components/RouteAnalysisTab.jsx';
 import { PODTab } from './components/PODTab.jsx';
 import { PODVerificationQueueTab } from './components/PODVerificationQueueTab.jsx';
 import { ReportsTab } from './components/ReportsTab.jsx';
@@ -291,7 +292,9 @@ export default function App() {
               <Calculator size={18} /> ETA & Risk Analysis
             </button>
 
-
+            <button className={`tab-btn ${activeTab === 'routeAnalysisTab' ? 'active' : ''}`} onClick={() => setActiveTab('routeAnalysisTab')}>
+              <Compass size={18} /> Route Analysis
+            </button>
 
             <button className={`tab-btn ${activeTab === 'podTab' ? 'active' : ''}`} onClick={() => setActiveTab('podTab')}>
               <FileCheck size={18} /> Proof of Delivery
@@ -338,6 +341,10 @@ export default function App() {
                 setActiveTab('podTab');
                 setSelectedShipmentId(id);
               }}
+              onRouteAnalysis={(id) => {
+                setActiveTab('routeAnalysisTab');
+                setSelectedShipmentId(id);
+              }}
             />
           )}
 
@@ -364,6 +371,14 @@ export default function App() {
               onSelectShipment={setSelectedShipmentId}
               onCalculateETA={handleCalculateETA}
               etaData={etaData}
+            />
+          )}
+
+          {activeTab === 'routeAnalysisTab' && (
+            <RouteAnalysisTab
+              shipments={shipments}
+              token={token}
+              onRouteApplied={() => loadShipments()}
             />
           )}
 

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Package, Plus, MapPin, Clock, FileCheck, X, Image, CheckCircle, AlertTriangle, ChevronLeft, ChevronRight, Search, XCircle, RotateCcw, History } from 'lucide-react';
+import { Package, Plus, MapPin, Clock, FileCheck, X, Image, CheckCircle, AlertTriangle, ChevronLeft, ChevronRight, Search, XCircle, RotateCcw, History, Compass } from 'lucide-react';
 import { apiService } from '../services/apiService.js';
 import { RouteHistory } from './RouteHistory.jsx';
 
-export function ShipmentsTab({ shipments, onTrack, onETA, onPOD, onCreateNew, currentUser, token }) {
+export function ShipmentsTab({ shipments, onTrack, onETA, onPOD, onRouteAnalysis, onCreateNew, currentUser, token }) {
   const [selectedPodShipment, setSelectedPodShipment] = useState(null);
   const [routeHistoryShipment, setRouteHistoryShipment] = useState(null);
   const [podData, setPodData] = useState(null);
@@ -243,6 +243,11 @@ export function ShipmentsTab({ shipments, onTrack, onETA, onPOD, onCreateNew, cu
                           <button className="btn btn-sm btn-outline" onClick={() => onETA(s.id)}>
                             <Clock size={12} /> ETA
                           </button>
+                          {onRouteAnalysis && (
+                            <button className="btn btn-sm btn-outline" onClick={() => onRouteAnalysis(s.id)} title="Run Route Analysis">
+                              <Compass size={12} /> Route Analysis
+                            </button>
+                          )}
                           {onPOD && (
                             <button className="btn btn-sm btn-outline" onClick={() => onPOD(s.id)}>
                               <FileCheck size={12} /> POD

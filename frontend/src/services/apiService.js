@@ -89,6 +89,23 @@ export const apiService = {
     return res.json();
   },
 
+  analyzeRoute: async (origin, destination, token) => {
+    const params = new URLSearchParams({ origin, destination });
+    const res = await fetch(`${API_BASE}/api/routes/analyze?${params.toString()}`, {
+      headers: getHeaders(token),
+    });
+    if (!res.ok) throw new Error('Route analysis failed');
+    return res.json();
+  },
+
+  analyzeShipmentRoute: async (shipmentId, token) => {
+    const res = await fetch(`${API_BASE}/api/routes/${shipmentId}/analyze`, {
+      headers: getHeaders(token),
+    });
+    if (!res.ok) throw new Error('Shipment route analysis failed');
+    return res.json();
+  },
+
   // ETA
   predictETA: async (shipmentId, token) => {
     const res = await fetch(`${API_BASE}/api/eta/${shipmentId}/predict`, {

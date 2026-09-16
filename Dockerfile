@@ -2,7 +2,7 @@
 FROM node:18-alpine AS frontend-builder
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
-RUN npm ci
+RUN npm install --legacy-peer-deps
 COPY frontend/ ./
 RUN npm run build
 
@@ -11,7 +11,6 @@ FROM maven:3.9.6-eclipse-temurin-21 AS backend-builder
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
-# Copy built React static bundle into Spring Boot static resources
 COPY --from=frontend-builder /app/frontend/dist ./src/main/resources/static
 RUN mvn clean package -DskipTests
 

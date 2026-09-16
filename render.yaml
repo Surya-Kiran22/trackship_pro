@@ -36,7 +36,4 @@ services:
     dockerContext: ./frontend
     envVars:
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: trackship-backend
-          property: url
+        value: https://trackship-backend.onrender.com

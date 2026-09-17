@@ -20,7 +20,7 @@ import java.util.ArrayList;
 @SuppressWarnings("unchecked")
 public class GoogleMapsServiceImpl implements GoogleMapsService {
 
-    @Value("${google.maps.api.key:''}")
+    @Value("${google.maps.api.key:AIzaSyCm6nyeC2TG-oc16rHAXh9lv33FabqToDA}")
     private String apiKey;
 
     private final RestTemplate restTemplate = new RestTemplate();

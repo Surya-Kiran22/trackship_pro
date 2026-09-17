@@ -2,8 +2,11 @@
 FROM node:18-alpine AS frontend-builder
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
-RUN npm install --legacy-peer-deps
-COPY frontend/ ./
+RUN npm install
+COPY frontend/src ./src
+COPY frontend/public ./public 2>/dev/null || true
+COPY frontend/index.html ./
+COPY frontend/vite.config.js ./
 RUN npm run build
 
 # Stage 2: Build Spring Boot Backend with embedded frontend
@@ -18,5 +21,6 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 COPY --from=backend-builder /app/target/*.jar app.jar
+ENV PORT=1022
 EXPOSE 1022
 ENTRYPOINT ["java", "-jar", "app.jar"]

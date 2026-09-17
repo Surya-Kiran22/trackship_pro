@@ -3,10 +3,7 @@ FROM node:18-alpine AS frontend-builder
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN npm install
-COPY frontend/src ./src
-COPY frontend/public ./public 2>/dev/null || true
-COPY frontend/index.html ./
-COPY frontend/vite.config.js ./
+COPY frontend/ ./
 RUN npm run build
 
 # Stage 2: Build Spring Boot Backend with embedded frontend
